@@ -8,6 +8,7 @@ function App() {
   const [pais, setPais] = useState({});
   const [puntos, setPuntos] = useState(0);
   const [letras, setLetras] = useState('');
+  const [segundos, setSegundos] = useState();
 
   useEffect(() => {
     axios
@@ -18,7 +19,7 @@ function App() {
         const rand = Math.floor(Math.random() * 220);
         setPais(result.data.data[rand]);
         var guiones = '';
-        for (var i = 1; i < pais.name.length; i++) {
+        for (var i = 0; i < result.data.data[rand].name.length; i++) {
           guiones += '_'
         }
         setLetras(guiones);
@@ -29,7 +30,7 @@ function App() {
   }, []);
 
   function check(respuesta) {
-    if (respuesta === pais.name) {
+    if (respuesta.toLowerCase() === pais.name.toLowerCase()) {
       setPuntos(puntos + 10);
       alert('Bien Papa');
     } else {
@@ -40,33 +41,55 @@ function App() {
     proximoPais();
   }
 
+  function restarSegs() {
+    setSegundos(segundos - 1)
+  }
+  function timer(){
+    const interval = setInterval(() => {
+      
+      if (segundos > 0) {
+        console.log(segundos)
+        restarSegs();
+        document.getElementById('timer').innerHTML = segundos;
+      }
+
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }
+
   function proximoPais() {
+    setSegundos(15)
+    timer();
     const rand = Math.floor(Math.random() * listaBanderas.length);
     setPais(listaBanderas[rand]);
     var guiones = '';
-    for (var i = 1; i < pais.name.length; i++) {
+    for (var i = 0; i < listaBanderas[rand].name.length; i++) {
       guiones += '_'
     }
     setLetras(guiones);
-    console.log(letras);
+
     document.getElementById('letras').innerHTML = '';
+    document.getElementById('btnLetras').style = '';
   }
 
   function start() {
     document.querySelector('.view').style = "display: block;"
     document.querySelector('.start').style = "display: none;"
+    setSegundos(15)
+    timer();
   }
 
   function letra() {
+    setPuntos(puntos - 2)
     if (letras == pais.name) {
-      alert('Toca check papa si ya gastaste todas las pistas');
+      document.getElementById('btnLetras').style = 'display: none';
+      document.getElementById('letras').innerHTML = letras;
     } else {
 
       var rand = Math.floor(Math.random() * (letras.length));
-      console.log(rand, letras[rand])
       while (letras[rand] !== '_') {
         rand = Math.floor(Math.random() * (letras.length));
-        console.log(rand, letras[rand])
       }
 
       const copiaLetras = letras.slice(0, rand) + pais.name[rand] + letras.slice(rand + 1);
@@ -90,8 +113,9 @@ function App() {
         <p id='letras'></p>
         <img id='bandera' src={pais.flag} alt='hola'></img>
         <input type="text" name='nombre' id='resp'></input>
-        <button onClick={() => letra()} > Letra (-2s) </button>
+        <button id='btnLetras' onClick={(e) => letra()} > Letra (-2s) </button>
         <button onClick={() => check(document.getElementById('resp').value)}> Check </button>
+        <p id='timer'></p>
       </div>
     </div>
   );
