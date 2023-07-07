@@ -5,12 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: rgb(60, 61, 59);
-  
-}
-
-html{
-  background: rgb(60, 61, 59);
+  background: none;
 }
 
 code {
@@ -20,15 +15,66 @@ code {
 
 #bandera {
   display: block;
-  width: 500px;
+  width: 700px;
+  max-height: 500x;
   margin: 2% auto 2% auto;
-  border: 2px solid black; 
+  border: 2px rgba(255, 255, 255, .9);
+  border-radius: 30px;
+
+  background-color: rgba(255, 255, 255, .03);
+  padding: 1%;
+
 }
 
-h1, p{
+h1{
+  margin: 2%;
   color: antiquewhite;
+  font-size: 100px;
+}
+p {
+  color: antiquewhite;
+  font-size: 25px;
 }
 
 .view {
   display: none;
+}
+
+html {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  background: -moz-linear-gradient(0deg, rgb(17, 17, 17) 0%, rgb(10, 0, 39) 100%);
+  background: -webkit-linear-gradient(0deg, rgb(17, 17, 17) 0%, rgb(10, 0, 39) 100%);
+  background: linear-gradient(0deg, rgb(17, 17, 17) 0%, rgb(10, 0, 39) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0d0920", endColorstr="#281358", GradientType=1);
+}
+
+#root{
+  background: none;
+}
+
+#flagsStartScreen{
+  display: block;
+  width: 50%;
+  margin: 3% auto 0 auto;
+}
+
+#playIcon{
+  width: 5%;
+}
+
+.buttons{
+  margin: .5%;
+  background-color: rgba(255, 255, 255, .01);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: .3%;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.buttons:hover {
+  color: antiquewhite;
 }
