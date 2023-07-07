@@ -16,7 +16,7 @@ code {
 #bandera {
   display: block;
   width: 700px;
-  max-height: 500x;
+  max-height: 400px;
   margin: 2% auto 2% auto;
   border: 2px rgba(255, 255, 255, .9);
   border-radius: 30px;
@@ -77,4 +77,12 @@ html {
 
 .buttons:hover {
   color: antiquewhite;
+}
+
+#answer { 
+  display: none;
+  background-color: white;
+  color: blue;
+  border-radius: 15px;
+  padding: 1%;
 }

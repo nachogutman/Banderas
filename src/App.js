@@ -1,8 +1,8 @@
 import './App.css';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import flagsStartScreen from './imgs/flagsStartScreen.png';
-import playIcon from './imgs/playIcon.png'
+import Start from './components/Start';
+import View from './components/View';
 
 function App() {
 
@@ -32,17 +32,28 @@ function App() {
   }, []);
 
   function check(respuesta) {
+    document.getElementById('letras').style = "display: none;"
+    document.querySelectorAll('.buttons').style = "display: none;"
+    document.getElementById('answer').style = "display: inline;"
     if (respuesta.toLowerCase() === pais.name.toLowerCase()) {
       if (segundos > 0) {
         setPuntos(puntos + 10 + segundos);
       } else {
         setPuntos(puntos + 10);
       }
+
+      document.getElementById('answer').innerHTML = "CORRECT"
+      
     } else {
       setPuntos(puntos - 1);
+      document.getElementById('answer').innerHTML = "Incorrect: " + pais.name
     }
 
-    proximoPais();
+    setTimeout(function () {
+      document.getElementById('answer').style = "display: none;"
+      document.getElementById('answer').innerHTML = ""
+      proximoPais();
+    }, 1000);
   }
 
   function proximoPais() {
@@ -59,13 +70,14 @@ function App() {
     document.getElementById('btnLetras').style = '';
   }
 
-  function start() {
-    document.querySelector('.view').style = "display: block;"
-    document.querySelector('.start').style = "display: none;"
+  const start = function() {
+    document.querySelector('.view').style = "display: block";
+    document.querySelector('.start').style = "display: none;";
     setSegundos(15)
   }
 
-  function letra() {
+  function mostrarLetra() {
+    document.getElementById('letras').style = "display: block"
     setPuntos(puntos - 2)
     if (letras == pais.name) {
       document.getElementById('btnLetras').style = 'display: none';
@@ -99,21 +111,9 @@ function App() {
   return (
     <div className="App">
 
-      <div className='start'>
-        <h1> Flags Game </h1>
-        <img id='flagsStartScreen' src={flagsStartScreen} alt=''></img>
-        <img id='playIcon' src={playIcon} onClick={() => start()} alt=''></img>
-      </div>
+      <Start id='start' start={start}></Start>
 
-      <div className='view'>
-        <h1 > {puntos} </h1>
-        <p id='letras'></p>
-        <img id='bandera' src={pais.flag} alt='hola'></img>
-        <input className='buttons' type="text" name='nombre' id='resp' placeholder=' Type here...'></input>
-        <button className='buttons' id='btnLetras' onClick={(e) => letra()} > Letra (-2s) </button>
-        <button className='buttons' onClick={() => check(document.getElementById('resp').value)}> Check </button>
-        <p id='timer'></p>
-      </div>
+      <View letra={mostrarLetra} check={check} pais={pais} puntos={puntos}></View>
     </div>
   );
 }
