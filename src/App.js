@@ -32,6 +32,7 @@ function App() {
   }, []);
 
   function check(respuesta) {
+    setSegundos(15);
     document.getElementById('letras').style = "display: none;"
     document.querySelectorAll('.buttons').style = "display: none;"
     document.getElementById('answer').style = "display: inline;"
@@ -43,7 +44,7 @@ function App() {
       }
 
       document.getElementById('answer').innerHTML = "CORRECT"
-      
+
     } else {
       setPuntos(puntos - 1);
       document.getElementById('answer').innerHTML = "Incorrect: " + pais.name
@@ -57,7 +58,6 @@ function App() {
   }
 
   function proximoPais() {
-    setSegundos(15)
     const rand = Math.floor(Math.random() * listaBanderas.length);
     setPais(listaBanderas[rand]);
     var guiones = '';
@@ -65,15 +65,14 @@ function App() {
       guiones += '_'
     }
     setLetras(guiones);
-
+    setSegundos(15);
     document.getElementById('letras').innerHTML = '';
     document.getElementById('btnLetras').style = '';
   }
 
-  const start = function() {
+  const start = function () {
     document.querySelector('.view').style = "display: block";
     document.querySelector('.start').style = "display: none;";
-    setSegundos(15)
   }
 
   function mostrarLetra() {
